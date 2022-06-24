@@ -1,0 +1,27 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Index";
+    var count = 0;
+}
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Settings</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var testimonial in Model.Testimonials)
+        {
+            <tr>
+                <th scope="row">@count</th>
+                <td><img src="~/assets/images/@testimonial.Url" alt="Alternate Text" /> </td>
+                <td>Update</td>
+                <td>Delete</td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
