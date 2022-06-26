@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using profi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using profi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace profi.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
+    [Authorize(Roles = nameof(Role.RoleType.Admin) + "," + nameof(Role.RoleType.Member))]
     public class TestimonialsController : Controller
     {
         private AppDbContext _context { get; }
@@ -37,11 +39,12 @@ namespace profi.Areas.AdminPanel.Controllers
             {
                 return NotFound();
             }
-            var testimonialPath = Helper.GetPath(_env.WebRootPath, "images", testimonial.Url);
-            if (System.IO.File.Exists(testimonialPath))
+            var path = Helper.GetPath(_env.WebRootPath,"images", testimonial.Url);
+            if (System.IO.File.Exists(path))
             {
-                System.IO.File.Delete(testimonialPath);
+                System.IO.File.Delete(path);
             }
+            _context.Testimonials.Remove(testimonial);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -64,7 +67,7 @@ namespace profi.Areas.AdminPanel.Controllers
                 ModelState.AddModelError("Photo", "Photo size must be less than 200 KB");
                 return View();
             }
-            if (!testimonial.Photo.CheckFileType("images/"))
+            if (!testimonial.Photo.CheckFileType("image/"))
             {
                 ModelState.AddModelError("Photo", "Photo type must be image");
                 return View();

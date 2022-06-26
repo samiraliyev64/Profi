@@ -1,0 +1,26 @@
+﻿@model Testimonials
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Update Testimonial</h4>
+                <h6>Current Photo:</h6>
+                <img src="~/images/@Model.Url" alt="Alternate Text" style="width:300px" />
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Photo">Select Photo:</label>
+                        <input asp-for="Photo" class="form-control">
+                        <span class="text-danger" asp-validation-for="Photo"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Save</button>
+                    <button class="btn btn-light" asp-action="Index">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

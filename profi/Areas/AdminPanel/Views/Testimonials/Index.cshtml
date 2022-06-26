@@ -1,9 +1,11 @@
-﻿@model HomeViewModel
+﻿@model IEnumerable<Testimonials>
 @{
     ViewData["Title"] = "Index";
-    var count = 0;
+    var count = 1;
 }
 
+<h1>Testimonials</h1><br/>
+<a class="btn btn-success" asp-action="Create">Create New Testimonial</a><br/>
 <table class="table table-striped table-dark">
     <thead>
         <tr>
@@ -13,13 +15,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var testimonial in Model.Testimonials)
+        @foreach (var testimonial in Model)
         {
             <tr>
                 <th scope="row">@count</th>
-                <td><img src="~/assets/images/@testimonial.Url" alt="Alternate Text" /> </td>
-                <td>Update</td>
-                <td>Delete</td>
+                <td><img src="~/images/@testimonial.Url" alt="Alternate Text" /> </td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-controller="Testimonials" asp-action="Update" asp-route-id="@testimonial.Id"><i class="mdi mdi-pencil"></i></a>
+                    <a class="btn btn-sm btn-danger" asp-controller="Testimonials" asp-action="Delete" asp-route-id="@testimonial.Id"><i class="mdi mdi-delete"></i></a>
+                </td>
             </tr>
             count++;
         }
